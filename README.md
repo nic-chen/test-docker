@@ -51,6 +51,18 @@ docker-compose up --scale nginx=10 -d
 docker-compose --compatibility up
 
 
+#wrk 安装
+git clone git@github.com:wg/wrk.git
+cd wrk
+make
+cp ./wrk /usr/local/bin/wrk
+chmod +x /usr/local/bin/wrk
+
+
+
+cp ./etcd/etcd /usr/local/bin/etcd
+chmod +x /usr/local/bin/etcd
+
 #apisix 安装
 
 wget http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
