@@ -127,3 +127,24 @@ curl http://127.0.0.1:9080/apisix/admin/routes/1 -X PUT -d '
 
 
 
+
+#nginx 配置
+
+    upstream backend {
+        server 127.0.0.1:7080;
+        server 127.0.0.1:8980;
+    }
+
+        location / {
+            proxy_http_version 1.1;
+            proxy_pass http://backend;
+        }
+
+
+
+
+
+
+
+
+
