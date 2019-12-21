@@ -1,95 +1,150 @@
-### Run
+#docker 安装
 
-```
-$ docker-compose -p docker-apisix up -d
-```
+sudo yum remove docker \
+                  docker-client \
+                  docker-client-latest \
+                  docker-common \
+                  docker-latest \
+                  docker-latest-logrotate \
+                  docker-logrotate \
+                  docker-engine
 
-### Configure
+sudo yum install -y yum-utils \
+  device-mapper-persistent-data \
+  lvm2
 
-```
-curl http://127.0.0.1:9080/apisix/admin/services/1 -X PUT -d '
+
+sudo yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo
+
+
+
+sudo yum install docker-ce      
+
+
+sudo systemctl start docker
+sudo systemctl enable docker
+
+
+https://github.com/docker/compose/releases/download/1.25.1-rc1/docker-compose-Darwin-x86_64
+cp /Users/meizu/Downloads/docker-compose-Darwin-x86_64 /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+
+
+#git 安装
+yum install -y git
+
+git clone git@github.com:nic-chen/docker-for-test.git
+
+cd docker-for-test
+
+docker-compose up --scale nginx=10 -d
+
+docker-compose --compatibility up
+
+
+#apisix 安装
+
+wget http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+sudo rpm -ivh epel-release-latest-7.noarch.rpm
+
+sudo yum install yum-utils
+sudo yum-config-manager --add-repo https://openresty.org/package/centos/openresty.repo
+
+sudo yum install -y etcd openresty curl git gcc luarocks lua-devel
+
+sudo service etcd start
+
+
+sudo luarocks install --lua-dir=/path/openresty/luajit apisix 0.9
+
+
+sudo apisix start
+
+#apisix 配置
+
+curl http://127.0.0.1:9080/apisix/admin/upstreams/1 -X PUT -d '
 {
-    "upstream": {
-        "type": "roundrobin",
-        "nodes": {
-            "127.0.0.1:9081": 1
-        }
+    "type": "roundrobin",
+    "nodes": {
+        "127.0.0.1:32816": 1
     }
 }'
 
-curl http://127.0.0.1:9080/apisix/admin/services/2 -X PUT -d '
+
+curl http://127.0.0.1:9080/apisix/admin/upstreams/1 -X PUT -d '
 {
-    "upstream": {
-        "type": "roundrobin",
-        "nodes": {
-            "127.0.0.1:9082": 1
-        }
+    "type": "roundrobin",
+    "nodes": {
+        "127.0.0.1:32815": 1,
+        "127.0.0.1:32818": 1,
+        "127.0.0.1:32821": 1,
+        "127.0.0.1:32816": 1
     }
 }'
 
-curl http://127.0.0.1:9080/apisix/admin/routes/11 -X PUT -d '
+
+
+curl http://127.0.0.1:9080/apisix/admin/upstreams/1 -X PUT -d '
 {
-    "uri": "/",
-    "host": "web1.lvh.me",
-    "service_id": "1"
+    "type": "roundrobin",
+    "nodes": {
+        "127.0.0.1:32820": 1,
+        "127.0.0.1:32822": 1,
+        "127.0.0.1:32823": 1,
+        "127.0.0.1:32815": 1,
+        "127.0.0.1:32818": 1,
+        "127.0.0.1:32821": 1,
+        "127.0.0.1:32816": 1
+    }
 }'
 
-curl http://127.0.0.1:9080/apisix/admin/routes/12 -X PUT -d '
+
+curl http://127.0.0.1:9080/apisix/admin/upstreams/1 -X PUT -d '
 {
-    "uri": "/{:.*}",
-    "host": "web1.lvh.me",
-    "service_id": "1"
+    "type": "roundrobin",
+    "nodes": {
+        "127.0.0.1:32817": 1,
+        "127.0.0.1:32824": 1,
+        "127.0.0.1:32819": 1,
+        "127.0.0.1:32820": 1,
+        "127.0.0.1:32822": 1,
+        "127.0.0.1:32823": 1,
+        "127.0.0.1:32815": 1,
+        "127.0.0.1:32818": 1,
+        "127.0.0.1:32821": 1,
+        "127.0.0.1:32816": 1
+    }
 }'
 
-curl http://127.0.0.1:9080/apisix/admin/routes/21 -X PUT -d '
+
+curl http://127.0.0.1:9080/apisix/admin/routes/1 -X PUT -d '
 {
-    "uri": "/",
-    "host": "web2.lvh.me",
-    "service_id": "2"
+    "uri": "/test",
+    "upstream_id": 1
 }'
 
-curl http://127.0.0.1:9080/apisix/admin/routes/22 -X PUT -d '
-{
-    "uri": "/{:.*}",
-    "host": "web2.lvh.me",
-    "service_id": "2"
-}'
 
-curl http://127.0.0.1:9080/apisix/admin/ssl/1 -X PUT -d "
-{
-    \"cert\": \"$( cat './mkcert/lvh.me+1.pem')\",
-    \"key\": \"$( cat './mkcert/lvh.me+1-key.pem')\",
-    \"sni\": \"lvh.me\"
-}"
 
-curl http://127.0.0.1:9080/apisix/admin/ssl/2 -X PUT -d "
-{
-    \"cert\": \"$( cat './mkcert/lvh.me+1.pem')\",
-    \"key\": \"$( cat './mkcert/lvh.me+1-key.pem')\",
-    \"sni\": \"*.lvh.me\"
-}"
-```
 
-### Test
+#nginx 配置
 
-```
-curl http://web1.lvh.me:9080/ -v # web1.txt
-curl http://web1.lvh.me:9080/web1.txt -v # web1
+    upstream backend {
+        server 127.0.0.1:7080;
+        server 127.0.0.1:8980;
+    }
 
-curl http://web2.lvh.me:9080/ -v # web2.txt
-curl http://web2.lvh.me:9080/web2.txt -v # web2
-```
+        location / {
+            proxy_http_version 1.1;
+            proxy_pass http://backend;
+        }
 
-```
-curl https://web1.lvh.me:9443/ -v --cacert ./mkcert/rootCA.pem
-```
 
-### Clean
 
-```
-$ docker-compose -p docker-apisix down
 
-$ sudo rm -rf etcd_data/member
 
-$ rm -rf apisix_log/*.log
-```
+
+
+
+
