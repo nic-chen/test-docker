@@ -6,7 +6,6 @@ services:
       - "80"
     volumes:
       - ./conf/default.conf:/etc/nginx/conf.d/default.conf:rw
-      - ./log/nginx/:/data/log/nginx/:rw
       - ./www/:/data/data/www/:rw
     restart: always
     deploy:

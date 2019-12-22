@@ -1,5 +1,5 @@
 apisix:
-  node_listen: 9080              # APISIX listening port
+  node_listen: 9083              # APISIX listening port
   node_ssl_listen: 9443
   enable_heartbeat: true
   enable_admin: true
@@ -56,7 +56,7 @@ nginx_config:                     # config for render the template to genarate n
     send_timeout: 10s              # timeout for transmitting a response to the client.then the connection is closed
 
 etcd:
-  host: "http://etcd:2379"   # etcd address
+  host: "http://127.0.0.1:2379"   # etcd address
   prefix: "/apisix"               # apisix configurations prefix
   timeout: 1                      # 1 seconds
 

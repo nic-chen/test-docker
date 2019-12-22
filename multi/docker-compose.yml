@@ -1,29 +1,56 @@
 version: "3.4"
 
 services:
-  apisix:
+  apisix1:
     build:
       context: ./
-      dockerfile: centos/Dockerfile
+      dockerfile: centos/Dockerfile1
     restart: always
     volumes:
-      - ./apisix_log:/usr/local/apisix/logs
-      - ./apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml:ro
+      - ./apisix_conf/config1.yaml:/usr/local/apisix/conf/config.yaml:ro
     depends_on:
       - etcd
-    ports:
-      - "9080"
-    networks:
-      - net-etcd
-      # - net-web1
-      # - net-web2
-      # - net-web3
     deploy:
-      replicas: 10
       resources:
-          limits:
-              cpus: '0.8'
-              memory: 512M
+        limits:
+          cpus: '1.2'
+          memory: 512M
+    network_mode: host
+
+
+  apisix2:
+    build:
+      context: ./
+      dockerfile: centos/Dockerfile2
+    restart: always
+    volumes:
+      - ./apisix_conf/config2.yaml:/usr/local/apisix/conf/config.yaml:ro
+    depends_on:
+      - etcd
+    deploy:
+      resources:
+        limits:
+          cpus: '1.2'
+          memory: 512M
+    network_mode: host
+
+
+  apisix3:
+    build:
+      context: ./
+      dockerfile: centos/Dockerfile3
+    restart: always
+    volumes:
+      - ./apisix_conf/config3.yaml:/usr/local/apisix/conf/config.yaml:ro
+    depends_on:
+      - etcd
+    deploy:
+      resources:
+        limits:
+          cpus: '1.2'
+          memory: 512M
+    network_mode: host
+
 
   etcd:
     # if you are in the mainland China, please use Azure China mirror:
@@ -40,36 +67,153 @@ services:
     networks:
       - net-etcd
 
-  # web1:
-  #   image: ruby:2-alpine
-  #   command: sh -c "mkdir -p /tmp/www && echo 'web1' > /tmp/www/web1.txt && ruby -run -ehttpd /tmp/www -p8000"
-  #   restart: always
-  #   ports:
-  #     - "8001:8000"
-  #   networks:
-  #     - net-web1
+  web1:
+    image: openresty/openresty:alpine
+    ports:
+      - "8001:80"
+    volumes:
+      - ./conf/default.conf:/etc/nginx/conf.d/default.conf:rw
+      - ./www/:/data/data/www/:rw
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '0.35'
+          memory: 512M
 
-  # web2:
-  #   image: ruby:2-alpine
-  #   command: sh -c "mkdir -p /tmp/www && echo 'web2' > /tmp/www/web2.txt && ruby -run -ehttpd /tmp/www -p8000"
-  #   restart: always
-  #   ports:
-  #     - "8002:8000"
-  #   networks:
-  #     - net-web2
+  web2:
+    image: openresty/openresty:alpine
+    ports:
+      - "8002:80"
+    volumes:
+      - ./conf/default.conf:/etc/nginx/conf.d/default.conf:rw
+      - ./www/:/data/data/www/:rw
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '0.35'
+          memory: 512M
 
-  # web3:
-  #   image: ruby:2-alpine
-  #   command: sh -c "mkdir -p /tmp/www && echo 'web2' > /tmp/www/web2.txt && ruby -run -ehttpd /tmp/www -p8000"
-  #   restart: always
-  #   ports:
-  #     - "8003:8000"
-  #   networks:
-  #     - net-web3
 
+  web3:
+    image: openresty/openresty:alpine
+    ports:
+      - "8003:80"
+    volumes:
+      - ./conf/default.conf:/etc/nginx/conf.d/default.conf:rw
+      - ./www/:/data/data/www/:rw
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '0.35'
+          memory: 512M
+
+
+  web4:
+    image: openresty/openresty:alpine
+    ports:
+      - "8004:80"
+    volumes:
+      - ./conf/default.conf:/etc/nginx/conf.d/default.conf:rw
+      - ./www/:/data/data/www/:rw
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '0.35'
+          memory: 512M
+
+
+  web5:
+    image: openresty/openresty:alpine
+    ports:
+      - "8005:80"
+    volumes:
+      - ./conf/default.conf:/etc/nginx/conf.d/default.conf:rw
+      - ./www/:/data/data/www/:rw
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '0.35'
+          memory: 512M
+
+
+  web6:
+    image: openresty/openresty:alpine
+    ports:
+      - "8006:80"
+    volumes:
+      - ./conf/default.conf:/etc/nginx/conf.d/default.conf:rw
+      - ./www/:/data/data/www/:rw
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '0.35'
+          memory: 512M
+
+
+  web7:
+    image: openresty/openresty:alpine
+    ports:
+      - "8007:80"
+    volumes:
+      - ./conf/default.conf:/etc/nginx/conf.d/default.conf:rw
+      - ./www/:/data/data/www/:rw
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '0.35'
+          memory: 512M
+
+
+  web8:
+    image: openresty/openresty:alpine
+    ports:
+      - "8008:80"
+    volumes:
+      - ./conf/default.conf:/etc/nginx/conf.d/default.conf:rw
+      - ./www/:/data/data/www/:rw
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '0.35'
+          memory: 512M
+
+
+  web9:
+    image: openresty/openresty:alpine
+    ports:
+      - "8009:80"
+    volumes:
+      - ./conf/default.conf:/etc/nginx/conf.d/default.conf:rw
+      - ./www/:/data/data/www/:rw
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '0.35'
+          memory: 512M
+
+
+  web10:
+    image: openresty/openresty:alpine
+    ports:
+      - "8010:80"
+    volumes:
+      - ./conf/default.conf:/etc/nginx/conf.d/default.conf:rw
+      - ./www/:/data/data/www/:rw
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '0.35'
+          memory: 512M    
 
 networks:
   net-etcd:
-  # net-web1:
-  # net-web2:
-  # net-web3:
