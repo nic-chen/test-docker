@@ -63,9 +63,9 @@ services:
     environment:
       ETCD_DATA_DIR: /etcd_data
     ports:
-      - "2379:2379"
+      - "127.0.0.1:2379:2379/tcp"
     networks:
-      - net-etcd
+      - net-web
 
   web1:
     image: openresty/openresty:alpine
@@ -80,6 +80,8 @@ services:
         limits:
           cpus: '0.35'
           memory: 512M
+    networks:
+      - net-web          
 
   web2:
     image: openresty/openresty:alpine
@@ -94,7 +96,8 @@ services:
         limits:
           cpus: '0.35'
           memory: 512M
-
+    networks:
+      - net-web
 
   web3:
     image: openresty/openresty:alpine
@@ -109,7 +112,8 @@ services:
         limits:
           cpus: '0.35'
           memory: 512M
-
+    networks:
+      - net-web
 
   web4:
     image: openresty/openresty:alpine
@@ -124,7 +128,8 @@ services:
         limits:
           cpus: '0.35'
           memory: 512M
-
+    networks:
+      - net-web
 
   web5:
     image: openresty/openresty:alpine
@@ -139,7 +144,8 @@ services:
         limits:
           cpus: '0.35'
           memory: 512M
-
+    networks:
+      - net-web
 
   web6:
     image: openresty/openresty:alpine
@@ -154,7 +160,8 @@ services:
         limits:
           cpus: '0.35'
           memory: 512M
-
+    networks:
+      - net-web
 
   web7:
     image: openresty/openresty:alpine
@@ -169,7 +176,8 @@ services:
         limits:
           cpus: '0.35'
           memory: 512M
-
+    networks:
+      - net-web
 
   web8:
     image: openresty/openresty:alpine
@@ -184,7 +192,8 @@ services:
         limits:
           cpus: '0.35'
           memory: 512M
-
+    networks:
+      - net-web
 
   web9:
     image: openresty/openresty:alpine
@@ -199,7 +208,8 @@ services:
         limits:
           cpus: '0.35'
           memory: 512M
-
+    networks:
+      - net-web
 
   web10:
     image: openresty/openresty:alpine
@@ -214,6 +224,9 @@ services:
         limits:
           cpus: '0.35'
           memory: 512M    
+    networks:
+      - net-web
 
 networks:
-  net-etcd:
+  net-web:
+    driver: bridge
