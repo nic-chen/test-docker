@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apisix
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apisix
+  template:
+    metadata:
+      labels:
+        app: apisix
+    spec:
+      containers:
+      - name: apisix
+        image: johz/apisix:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 9080
+        env:
+        - name: ETCD_HOST
+          value: "http://192.168.99.1:2379"
+      nodeSelector:
+        gateway: yy
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: apisix
+  labels:
+    app: apisix
+spec:
+  ports:
+  - port: 9080
+    targetPort: 9080
+    nodePort: 30080
+    protocol: TCP
+    name: http
+  selector:
+    app: apisix
+  type: NodePort

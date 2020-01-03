@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: http-svc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: http-svc
+  template:
+    metadata:
+      labels:
+        app: http-svc
+    spec:
+      containers:
+      - name: http-svc
+        image: johz/openresty-md5:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+      nodeSelector:
+        upstream: yy
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: http-svc
+  labels:
+    app: http-svc
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  selector:
+    app: http-svc
+

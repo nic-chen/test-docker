@@ -1,0 +1,372 @@
+
+直连
+
+wrk -d 8 -t 10 -c 50 http://192.168.0.130:8088/test
+Running 8s test @ http://192.168.0.130:8088/test
+  10 threads and 50 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    15.95ms    7.95ms 376.53ms   96.98%
+    Req/Sec   316.87     70.80     1.30k    96.23%
+  25127 requests in 8.10s, 4.24MB read
+Requests/sec:   3101.93
+Transfer/sec:    536.04KB
+
+
+2
+wrk -d 8 -t 10 -c 50 http://192.168.0.130:8081/test
+Running 8s test @ http://192.168.0.130:8081/test
+  10 threads and 50 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    10.58ms    2.58ms 118.19ms   82.95%
+    Req/Sec   474.38     48.17     0.88k    85.88%
+  37806 requests in 8.01s, 6.38MB read
+Requests/sec:   4722.51
+Transfer/sec:    816.08KB
+
+3
+wrk -d 5 -t 10 -c 50 http://192.168.0.130:8081/test
+Running 5s test @ http://192.168.0.130:8081/test
+  10 threads and 50 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     6.36ms    1.15ms  46.76ms   82.57%
+    Req/Sec   788.96    106.82     2.07k    94.44%
+  39595 requests in 5.10s, 6.68MB read
+Requests/sec:   7762.72
+Transfer/sec:      1.31MB
+
+
+4
+wrk -d 8 -t 10 -c 50 http://192.168.0.130:8081/test
+Running 8s test @ http://192.168.0.130:8081/test
+  10 threads and 50 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     5.30ms    1.10ms  40.36ms   87.26%
+    Req/Sec     0.95k   184.33     4.66k    96.63%
+  75642 requests in 8.10s, 12.76MB read
+Requests/sec:   9339.10
+Transfer/sec:      1.58MB
+
+
+5
+wrk -d 5 -t 10 -c 50 http://192.168.0.130:8081/test
+Running 5s test @ http://192.168.0.130:8081/test
+  10 threads and 50 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     4.09ms    0.87ms  28.16ms   83.96%
+    Req/Sec     1.23k    94.09     2.24k    82.91%
+  62223 requests in 5.10s, 10.50MB read
+Requests/sec:  12200.72
+Transfer/sec:      2.06MB
+
+6
+wrk -d 5 -t 10 -c 50 http://192.168.0.130:8081/test
+Running 5s test @ http://192.168.0.130:8081/test
+  10 threads and 50 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     3.57ms  720.24us  12.79ms   83.50%
+    Req/Sec     1.40k   145.28     2.53k    87.60%
+  70969 requests in 5.10s, 11.98MB read
+Requests/sec:  13918.74
+Transfer/sec:      2.35MB
+
+
+7
+
+wrk -d 5 -t 10 -c 50 http://192.168.0.130:8081/test
+Running 5s test @ http://192.168.0.130:8081/test
+  10 threads and 50 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     2.99ms  685.48us  16.08ms   77.61%
+    Req/Sec     1.68k   185.66     3.37k    83.30%
+  85139 requests in 5.10s, 14.37MB read
+Requests/sec:  16692.51
+Transfer/sec:      2.82MB
+
+
+8
+
+wrk -d 5 -t 10 -c 50 http://192.168.0.130:8081/test
+Running 5s test @ http://192.168.0.130:8081/test
+  10 threads and 50 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     2.70ms  566.40us   7.60ms   79.74%
+    Req/Sec     1.86k   213.48     4.09k    93.86%
+  93396 requests in 5.10s, 15.76MB read
+Requests/sec:  18312.11
+Transfer/sec:      3.09MB
+
+
+apisix
+
+1 vs 1
+
+wrk -d 8 -t 10 -c 50 http://192.168.0.129:9080/test
+Running 8s test @ http://192.168.0.129:9080/test
+  10 threads and 50 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    15.98ms    7.36ms 357.34ms   97.17%
+    Req/Sec   313.96     61.32     1.34k    96.38%
+  25072 requests in 8.10s, 4.21MB read
+Requests/sec:   3095.29
+Transfer/sec:    531.87KB
+
+
+
+1 vs 2
+
+wrk -d 8 -t 10 -c 50 http://192.168.0.129:9080/test
+Running 8s test @ http://192.168.0.129:9080/test
+  10 threads and 50 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    10.56ms    9.21ms 100.87ms   32.54%
+    Req/Sec   474.99     77.06     1.38k    86.05%
+  37986 requests in 8.10s, 6.37MB read
+Requests/sec:   4689.76
+Transfer/sec:    805.84KB
+
+
+1 vs 3
+
+wrk -d 8 -t 10 -c 50 http://192.168.0.129:9080/test
+Running 8s test @ http://192.168.0.129:9080/test
+  10 threads and 50 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     7.11ms   10.15ms 231.58ms   72.61%
+    Req/Sec   706.21    142.83     2.36k    79.20%
+  56457 requests in 8.10s, 9.47MB read
+Requests/sec:   6970.27
+Transfer/sec:      1.17MB
+
+
+1 vs 4
+
+wrk -d 8 -t 10 -c 50 http://192.168.0.129:9080/test
+Running 8s test @ http://192.168.0.129:9080/test
+  10 threads and 50 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     5.53ms    7.10ms 105.32ms   79.31%
+    Req/Sec     0.91k   149.87     2.75k    84.43%
+  72488 requests in 8.10s, 12.16MB read
+Requests/sec:   8949.97
+Transfer/sec:      1.50MB
+
+
+1 vs 5
+
+wrk -d 5 -t 10 -c 50 http://192.168.0.129:9080/test
+Running 5s test @ http://192.168.0.129:9080/test
+  10 threads and 50 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     4.44ms    6.69ms 100.78ms   81.39%
+    Req/Sec     1.13k   168.18     2.33k    76.24%
+  56829 requests in 5.10s, 9.54MB read
+Requests/sec:  11144.15
+Transfer/sec:      1.87MB
+
+
+1 vs 6
+
+ wrk -d 5 -t 10 -c 50 http://192.168.0.129:9080/test
+Running 5s test @ http://192.168.0.129:9080/test
+  10 threads and 50 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     3.72ms    5.87ms  59.59ms   84.46%
+    Req/Sec     1.35k   181.62     2.17k    72.13%
+  67856 requests in 5.10s, 11.39MB read
+Requests/sec:  13306.22
+Transfer/sec:      2.23MB
+
+1 vs 7
+
+wrk -d 5 -t 10 -c 50 http://192.168.0.129:9080/test
+Running 5s test @ http://192.168.0.129:9080/test
+  10 threads and 50 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     3.21ms    5.20ms  58.56ms   86.77%
+    Req/Sec     1.56k   198.21     2.38k    70.41%
+  78936 requests in 5.10s, 13.25MB read
+Requests/sec:  15479.16
+Transfer/sec:      2.60MB
+
+
+1 vs 8
+
+wrk -d 5 -t 10 -c 50 http://192.168.0.129:9080/test
+Running 5s test @ http://192.168.0.129:9080/test
+  10 threads and 50 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     2.84ms    4.75ms  65.29ms   87.81%
+    Req/Sec     1.77k   228.05     2.70k    71.99%
+  89222 requests in 5.10s, 14.97MB read
+Requests/sec:  17494.91
+Transfer/sec:      2.94MB
+
+
+
+
+nginx
+
+1 vs 8
+
+wrk -d 5 -t 10 -c 50 http://192.168.0.129/test
+Running 5s test @ http://192.168.0.129/test
+  10 threads and 50 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     2.82ms    4.96ms 198.12ms   87.79%
+    Req/Sec     1.78k   229.47     2.58k    71.01%
+  89726 requests in 5.10s, 14.63MB read
+Requests/sec:  17593.72
+Transfer/sec:      2.87MB
+
+
+1 vs 7
+
+wrk -d 5 -t 10 -c 50 http://192.168.0.129/test
+Running 5s test @ http://192.168.0.129/test
+  10 threads and 50 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     3.21ms    5.43ms  67.68ms   86.30%
+    Req/Sec     1.56k   210.68     2.64k    71.54%
+  78751 requests in 5.10s, 12.84MB read
+Requests/sec:  15443.05
+Transfer/sec:      2.52MB
+
+
+1 vs 6
+
+wrk -d 5 -t 10 -c 50 http://192.168.0.129/test
+Running 5s test @ http://192.168.0.129/test
+  10 threads and 50 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     3.70ms    6.01ms  86.86ms   84.22%
+    Req/Sec     1.35k   234.15     3.24k    82.34%
+  67938 requests in 5.10s, 11.08MB read
+Requests/sec:  13322.73
+Transfer/sec:      2.17MB
+
+
+1 vs 5
+
+wrk -d 5 -t 10 -c 50 http://192.168.0.129/test
+Running 5s test @ http://192.168.0.129/test
+  10 threads and 50 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     4.30ms    4.88ms  88.11ms   80.43%
+    Req/Sec     1.17k   151.79     2.41k    78.42%
+  58636 requests in 5.10s, 9.56MB read
+Requests/sec:  11497.64
+Transfer/sec:      1.87MB
+
+
+1 vs 4
+
+wrk -d 5 -t 10 -c 50 http://192.168.0.129/test
+Running 5s test @ http://192.168.0.129/test
+  10 threads and 50 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     5.35ms    5.20ms  59.54ms   77.85%
+    Req/Sec     0.94k   123.01     1.86k    80.00%
+  47189 requests in 5.10s, 7.69MB read
+Requests/sec:   9252.82
+Transfer/sec:      1.51MB
+
+
+1 vs 3
+
+wrk -d 5 -t 10 -c 50 http://192.168.0.129/test
+Running 5s test @ http://192.168.0.129/test
+  10 threads and 50 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     7.06ms    9.70ms 253.91ms   73.59%
+    Req/Sec   710.33    157.53     2.51k    83.50%
+  35572 requests in 5.10s, 5.80MB read
+Requests/sec:   6975.45
+Transfer/sec:      1.14MB
+
+
+1 vs 2
+
+wrk -d 5 -t 10 -c 50 http://192.168.0.129/test
+Running 5s test @ http://192.168.0.129/test
+  10 threads and 50 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    15.82ms    9.95ms 378.70ms   96.52%
+    Req/Sec   319.90     83.30     1.32k    94.97%
+  15850 requests in 5.10s, 2.58MB read
+Requests/sec:   3108.46
+Transfer/sec:    518.95KB
+
+
+1 vs 1
+
+wrk -d 5 -t 10 -c 50 http://192.168.0.129/test
+Running 5s test @ http://192.168.0.129/test
+  10 threads and 50 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    15.84ms    9.12ms 355.25ms   96.79%
+    Req/Sec   318.03     58.16     0.93k    94.60%
+  15862 requests in 5.10s, 2.59MB read
+Requests/sec:   3110.32
+Transfer/sec:    519.27KB
+
+
+
+
+
+
+单网关
+
+wrk -d 5 -t 10 -c 50 http://192.168.0.129/test
+Running 5s test @ http://192.168.0.129/test
+  10 threads and 50 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     2.20ms  522.20us  17.73ms   86.19%
+    Req/Sec     2.28k   153.39     3.25k    80.87%
+  115202 requests in 5.10s, 18.78MB read
+Requests/sec:  22589.14
+Transfer/sec:      3.68MB
+
+
+
+双网关
+
+wrk -d 5 -t 10 -c 50 http://192.168.0.129/test
+Running 5s test @ http://192.168.0.129/test
+  10 threads and 50 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     1.18ms  643.53us  17.28ms   79.14%
+    Req/Sec     4.25k   267.72     4.76k    72.16%
+  215840 requests in 5.10s, 35.19MB read
+Requests/sec:  42323.72
+Transfer/sec:      6.90MB
+
+
+
+3
+wrk -d 5 -t 10 -c 50 http://192.168.0.129/test
+Running 5s test @ http://192.168.0.129/test
+  10 threads and 50 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency   700.68us  428.80us  16.86ms   92.19%
+    Req/Sec     7.14k   394.92     8.02k    72.55%
+  362093 requests in 5.10s, 59.03MB read
+Requests/sec:  70999.23
+Transfer/sec:     11.58MB
+
+
+
+4
+wrk -d 5 -t 10 -c 50 http://192.168.0.129/test
+Running 5s test @ http://192.168.0.129/test
+  10 threads and 50 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency   547.88us  228.41us  16.28ms   96.91%
+    Req/Sec     8.99k   252.58     9.33k    90.39%
+  456391 requests in 5.10s, 74.41MB read
+Requests/sec:  89491.03
+Transfer/sec:     14.59MB
+
+
+
+
+

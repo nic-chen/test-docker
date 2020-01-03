@@ -4,68 +4,67 @@ services:
   apisix1:
     build:
       context: ./
-      dockerfile: centos/Dockerfile1
+      dockerfile: centos/Dockerfile
     restart: always
-    volumes:
-      - ./apisix_conf/config1.yaml:/usr/local/apisix/conf/config.yaml:ro
-    depends_on:
-      - etcd
-    deploy:
-      resources:
-        limits:
-          cpus: '1.2'
-          memory: 512M
-    network_mode: host
-
-
-  apisix2:
-    build:
-      context: ./
-      dockerfile: centos/Dockerfile2
-    restart: always
-    volumes:
-      - ./apisix_conf/config2.yaml:/usr/local/apisix/conf/config.yaml:ro
-    depends_on:
-      - etcd
-    deploy:
-      resources:
-        limits:
-          cpus: '1.2'
-          memory: 512M
-    network_mode: host
-
-
-  apisix3:
-    build:
-      context: ./
-      dockerfile: centos/Dockerfile3
-    restart: always
-    volumes:
-      - ./apisix_conf/config3.yaml:/usr/local/apisix/conf/config.yaml:ro
-    depends_on:
-      - etcd
-    deploy:
-      resources:
-        limits:
-          cpus: '1.2'
-          memory: 512M
-    network_mode: host
-
-
-  etcd:
-    # if you are in the mainland China, please use Azure China mirror:
-    # image: gcr.azk8s.cn/etcd-development/etcd:v3.3.12
-    image: gcr.io/etcd-development/etcd:v3.3.12
-    command: /usr/local/bin/etcd --advertise-client-urls http://0.0.0.0:2379 --listen-client-urls http://0.0.0.0:2379
-    restart: always
-    volumes:
-      - ./etcd_data:/etcd_data
-    environment:
-      ETCD_DATA_DIR: /etcd_data
     ports:
-      - "127.0.0.1:2379:2379/tcp"
-    networks:
-      - net-web
+      - "9080:9080"    
+    volumes:
+      - ./apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml:ro
+    deploy:
+      resources:
+        limits:
+          cpus: '1.2'
+          memory: 512M
+
+
+  # apisix2:
+  #   build:
+  #     context: ./
+  #     dockerfile: centos/Dockerfile2
+  #   restart: always
+  #   volumes:
+  #     - ./apisix_conf/config2.yaml:/usr/local/apisix/conf/config.yaml:ro
+  #   depends_on:
+  #     - etcd
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         cpus: '1.2'
+  #         memory: 512M
+  #   network_mode: host
+
+
+  # apisix3:
+  #   build:
+  #     context: ./
+  #     dockerfile: centos/Dockerfile3
+  #   restart: always
+  #   volumes:
+  #     - ./apisix_conf/config3.yaml:/usr/local/apisix/conf/config.yaml:ro
+  #   depends_on:
+  #     - etcd
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         cpus: '1.2'
+  #         memory: 512M
+  #   network_mode: host
+
+
+  # etcd:
+  #   # if you are in the mainland China, please use Azure China mirror:
+  #   # image: gcr.azk8s.cn/etcd-development/etcd:v3.3.12
+  #   image: gcr.io/etcd-development/etcd:v3.3.12
+  #   command: /usr/local/bin/etcd --advertise-client-urls http://0.0.0.0:2379 --listen-client-urls http://0.0.0.0:2379
+  #   restart: always
+  #   volumes:
+  #     - ./etcd_data:/etcd_data
+  #   environment:
+  #     ETCD_DATA_DIR: /etcd_data
+  #   ports:
+  #     - "127.0.0.1:2379:2379/tcp"
+  #   networks:
+  #     - net-web
 
   web1:
     image: openresty/openresty:alpine
